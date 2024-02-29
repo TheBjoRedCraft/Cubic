@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WhitelistManager {
-    public static File configFile;
-    public static FileConfiguration config;
-    public static List<UUID> whitelist;
+    public static File configFile = new File(Cubic.getInstance.getDataFolder(), "whitelist.yml");
+    public static FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+    public static List<UUID> whitelist = new ArrayList<>();
     public static void add(UUID player){
         whitelist.add(player);
     }
@@ -22,13 +22,10 @@ public class WhitelistManager {
         whitelist.remove(player);
     }
     public static void onEnable(){
-        configFile = new File(Cubic.getInstance.getDataFolder(), "whitelist.yml");
         if (!configFile.exists()) {
             Cubic.getInstance.saveResource("whitelist.yml", false);
         }
-        config = YamlConfiguration.loadConfiguration(configFile);
 
-        whitelist = new ArrayList<>();
         List<String> uuidStrings = config.getStringList("whitelist");
         for (String uuidString : uuidStrings) {
             whitelist.add(UUID.fromString(uuidString));
