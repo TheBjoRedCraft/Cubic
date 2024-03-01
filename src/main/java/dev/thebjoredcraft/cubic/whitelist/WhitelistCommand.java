@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -13,19 +14,20 @@ public class WhitelistCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(args.length == 2 && args[0].equalsIgnoreCase("add")){
-            if(Bukkit.getPlayer(args[1]) != null){
-                UUID player = Bukkit.getPlayer(args[1]).getUniqueId();
-                if(!WhitelistManager.whitelist.contains(player)){
-                    WhitelistManager.add(player);
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Added " + player + " ("+  Bukkit.getPlayer(args[1]).getName() + ") to the whitelist."));
+            Player player = Bukkit.getPlayer(args[1]);
+            if(player != null){
+                if(!WhitelistManager.whitelist.contains(player.getName())){
+                    WhitelistManager.add(player.getName());
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Added " + player + " to the whitelist."));
                 }else{
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>The player is already whitelisted!"));
                 }
             }else {
-                UUID player = UUID.fromString(args[1]);
-                if(!WhitelistManager.whitelist.contains(player)){
-                    WhitelistManager.add(player);
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Added " + player +" to the whitelist."));
+                String players = args[1];
+
+                if(!WhitelistManager.whitelist.contains(players)){
+                    WhitelistManager.add(players);
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Added " + players +" to the whitelist."));
                 }else{
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>The player is already whitelisted!"));
                 }
@@ -33,26 +35,27 @@ public class WhitelistCommand implements CommandExecutor {
         }else if(args.length == 1 && args[0].equalsIgnoreCase("list")){
             if(!WhitelistManager.whitelist.isEmpty()) {
                 sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Whitelisted uuids:"));
-                for (UUID player : WhitelistManager.whitelist) {
+                for (String player : WhitelistManager.whitelist) {
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>" + player));
                 }
             }else{
                 sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>There is no player on the whitelist!"));
             }
         }else if(args.length == 2 && args[0].equalsIgnoreCase("remove")){
-            if(Bukkit.getPlayer(args[1]) != null){
-                UUID player = Bukkit.getPlayer(args[1]).getUniqueId();
-                if(!WhitelistManager.whitelist.contains(player)){
-                    WhitelistManager.remove(player);
+            Player player = Bukkit.getPlayer(args[1]);
+            if(player != null){
+                if(!WhitelistManager.whitelist.contains(player.getName())){
+                    WhitelistManager.remove(player.getName());
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Removed " + player + " ("+  Bukkit.getPlayer(args[1]).getName() + ") from the whitelist."));
                 }else{
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>The player is not whitelisted!"));
                 }
             }else {
-                UUID player = UUID.fromString(args[1]);
-                if(!WhitelistManager.whitelist.contains(player)){
-                    WhitelistManager.remove(player);
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Removed " + player +" from the whitelist."));
+                String players = args[1];
+
+                if(!WhitelistManager.whitelist.contains(players)){
+                    WhitelistManager.remove(players);
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Removed " + players +" from the whitelist."));
                 }else{
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>The player is not whitelisted!"));
                 }

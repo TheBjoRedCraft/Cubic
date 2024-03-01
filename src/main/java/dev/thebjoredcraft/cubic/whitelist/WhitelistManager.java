@@ -14,11 +14,11 @@ import java.util.List;
 public class WhitelistManager {
     public static File configFile = new File(Cubic.getInstance.getDataFolder(), "whitelist.yml");
     public static FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-    public static List<UUID> whitelist = new ArrayList<>();
-    public static void add(UUID player){
+    public static List<String> whitelist = new ArrayList<>();
+    public static void add(String player){
         whitelist.add(player);
     }
-    public static void remove(UUID player){
+    public static void remove(String player){
         whitelist.remove(player);
     }
     public static void onEnable(){
@@ -27,15 +27,10 @@ public class WhitelistManager {
         }
 
         List<String> uuidStrings = config.getStringList("whitelist");
-        for (String uuidString : uuidStrings) {
-            whitelist.add(UUID.fromString(uuidString));
-        }
+        whitelist.addAll(uuidStrings);
     }
     public static void onDisable(){
-        List<String> uuidStrings = new ArrayList<>();
-        for (UUID uuid : whitelist) {
-            uuidStrings.add(uuid.toString());
-        }
+        List<String> uuidStrings = new ArrayList<>(whitelist);
         config.set("whitelist", uuidStrings);
         try {
             config.save(configFile);
