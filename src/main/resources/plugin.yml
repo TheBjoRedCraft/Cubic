@@ -4,4 +4,7 @@ main: dev.thebjoredcraft.cubic.Cubic
 api-version: '1.20'
 commands:
   cwhitelist:
+    aliases:
+      - cw
+      - whitelist
     permission: cwhitelist.cmd
