@@ -8,8 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 public class WhitelistCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -27,14 +25,14 @@ public class WhitelistCommand implements CommandExecutor {
 
                 if(!WhitelistManager.whitelist.contains(players)){
                     WhitelistManager.add(players);
-                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Added " + players +" to the whitelist."));
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Added " + players + " to the whitelist."));
                 }else{
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>The player is already whitelisted!"));
                 }
             }
         }else if(args.length == 1 && args[0].equalsIgnoreCase("list")){
             if(!WhitelistManager.whitelist.isEmpty()) {
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Whitelisted uuids:"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Whitelisted players:"));
                 for (String player : WhitelistManager.whitelist) {
                     sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>" + player));
                 }

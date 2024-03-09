@@ -3,6 +3,10 @@ version: '${version}'
 main: dev.thebjoredcraft.cubic.Cubic
 api-version: '1.20'
 commands:
+  announcement:
+    permission: announcement.cmd
+    aliases:
+      - announce
   cwhitelist:
     aliases:
       - cw

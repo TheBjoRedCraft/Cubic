@@ -1,5 +1,7 @@
 package dev.thebjoredcraft.cubic;
 
+import dev.thebjoredcraft.cubic.announcement.AnnouncementCommand;
+import dev.thebjoredcraft.cubic.shutdown.ShutdownManager;
 import dev.thebjoredcraft.cubic.whitelist.WhitelistCommand;
 import dev.thebjoredcraft.cubic.whitelist.WhitelistManager;
 import org.bukkit.Bukkit;
@@ -18,6 +20,7 @@ public final class Cubic extends JavaPlugin {
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(new EventManager(), this);
         getCommand("cwhitelist").setExecutor(new WhitelistCommand());
+        getCommand("announcement").setExecutor(new AnnouncementCommand());
 
 
         saveDefaultConfig();
@@ -30,6 +33,7 @@ public final class Cubic extends JavaPlugin {
     public void onDisable() {
         saveDefaultConfig();
         WhitelistManager.onDisable();
+
         // Plugin shutdown logic
     }
 }
